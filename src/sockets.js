@@ -10,7 +10,7 @@ module.exports = function(io){
 
         let messages = await Message.find({})
 
-        io.sockets.emit('load messages', messages)
+        await io.sockets.emit('load messages', messages)
 
         socket.on('send message', async (data) => {
             io.sockets.emit('new message', data)
@@ -21,8 +21,6 @@ module.exports = function(io){
                 media: null,
             }).save()
         })
-        
-        console.log('');
 
         socket.on('disconnect', () =>{
             console.log('User disconnected');
