@@ -8,7 +8,7 @@ const app       = express();
 const server    = http.createServer(app);
 const io        = new Server(server);
 
-mongoose.connect('mongodb://localhost/chat_db').then(
+mongoose.connect('mongodb://localhost/test').then(
     db => console.log('db is connected')
     ).catch(
         e => console.log(e)
