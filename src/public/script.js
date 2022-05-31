@@ -1,12 +1,31 @@
 var socket = io()
 
+const chat          = document.getElementById('chat');
 const form_message  = document.getElementById('form-message');
 const message       = document.getElementById('message');
-
 const user_message  = document.getElementById('user_message');
 const my_message    = document.getElementById('my_message');
+const boxMessages   = document.getElementById('boxMessages');
 
-const boxMessages    = document.getElementById('boxMessages');
+// Login
+const login     = document.getElementById('login')
+const nickForm  = document.getElementById('nickForm')
+const nik       = document.getElementById('nickName')
+
+const users = [];
+
+// Login form
+nickForm.addEventListener('submit', e=>{
+    e.preventDefault();
+    socket.emit('new user', nik.value, res=>{
+        if(res){
+            login.classList.add('d-none')
+            chat.classList.remove('d-none')
+        }else{
+            alert('Error')
+        }
+    })
+})
 
 
 // Send messages
@@ -18,7 +37,7 @@ form_message.addEventListener('submit', (e)=>{
 
 // Listen messages
 socket.on('new message', (data)=>{
-    user_message.innerText = data
+    // user_message.innerText = data.message
 })
 
 // Load messages
@@ -49,3 +68,9 @@ function displayMessage(message){
 
         boxMessages.appendChild(div)
 }
+
+// socket.on('users', data=>{
+//     for (let i in data){
+//         console.log(data[i]);
+//     }
+// })
