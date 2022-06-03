@@ -1,9 +1,9 @@
-const Chat = require('./models/chat')
-const Message = require('./models/message')
+const Chat = require('./Models/chat')
+const Message = require('./Models/message')
 
 module.exports = function(io){
     let nikNames = [];
-    
+
     io.on('connection', async (socket) => {
         console.log('New connection established');
         // await new Chat({
@@ -26,6 +26,7 @@ module.exports = function(io){
         updateMessages()
 
         socket.on('send message', async (message) => {
+            console.log('entro', message);
             io.sockets.emit('new message', {message, user: socket.nickName})
             await new Message({
                 chat_id: 1,
@@ -41,8 +42,8 @@ module.exports = function(io){
 
         socket.on('disconnect', () =>{
             if(!socket.nickName) return;
-            nickNames.splice(nickNames.indexOf(socket.nickName), 1)
-            io.sockets.emit('users', nikNames)
+            // nickNames.splice(nickNames.indexOf(socket.nickName), 1)
+            // io.sockets.emit('users', nikNames)
         })
 
     })  

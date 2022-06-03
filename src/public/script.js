@@ -27,7 +27,6 @@ nickForm.addEventListener('submit', e=>{
     })
 })
 
-
 // Send messages
 form_message.addEventListener('submit', (e)=>{
     e.preventDefault();
@@ -74,3 +73,4 @@ function displayMessage(message){
 //         console.log(data[i]);
 //     }
 // })
+
