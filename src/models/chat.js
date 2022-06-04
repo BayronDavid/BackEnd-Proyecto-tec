@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const {Schema} = mongoose;
 
 const ChatSchema = new Schema({
+    unique_id   : String,
     travel_id   : String,
     name        : String,
     type        : String,
