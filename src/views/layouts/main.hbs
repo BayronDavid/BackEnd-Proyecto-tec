@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <title>Chat</title>
+</head>
+<style>
+    .card {
+        border-radius: 0;
+        margin: 0;
+    }
+
+    th {
+        cursor: pointer;
+    }
+
+    p {
+        padding: 0;
+        margin: 0;
+        display: block;
+    }
+
+    #boxMessages{
+        overflow: auto;
+    }
+</style>
+
+<body>
+    {{{body}}}
+</body>
+<!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+    crossorigin="anonymous"></script>
+<!-- Socket.io -->
+<script src="http://localhost:3000/socket.io/socket.io.js"></script>
+{{!--
+<script type="module" src="script.js"></script> --}}
+<script>
+    var socket = io()
+
+    const form_message = document.getElementById('form-message');
+    const messageInput = document.getElementById('message');
+    const boxMessages = document.getElementById('boxMessages');
+
+    const lengthMessages = document.getElementById('lengthMessages');
+    // Login
+
+    const users = [];
+
+    var decodedJson = decodeURIComponent("{{{encodedJson}}}");
+    var user = JSON.parse(decodedJson)[0];
+    console.log(user)
+
+    socket.emit('new user', user, res => {
+        if (res) {
+            'success'
+        } else {
+            alert('Error')
+        }
+    })
+
+    // Send messages
+    form_message.addEventListener('submit', (e) => {
+        e.preventDefault();
+        socket.emit('send message', messageInput.value)
+        message.value = ''
+    })
+
+    // Load messages
+    socket.on('load messages', (data) => {
+        lengthMessages.innerHTML = data.length;
+        boxMessages.innerHTML = '';
+        for (var i = 0; i < data.length; i++) {
+            displayMessage(data[i])
+        }
+    })
+
+    // Display messages
+    function displayMessage(message) {
+        let div = document.createElement('div')
+        div.setAttribute('class', 'direct-chat-msg right')
+        if (message.nik == user.name + ' ' + user.lastName) {
+            div.innerHTML = `
+                <div class="row m-2">
+                    <div class="col-1">
+                    </div>
+                    <div class="col-9">
+                        <p class="text-end"><b> ${message.nik}</b></p>
+                        <div class="text-right">
+                            <p class="btn btn-primary">  ${message.message} </p>
+                        </div>
+                        <p class="font-weight-light text-center">${message.created_at}</p>
+                    </div>
+                    <div class="col-1 d-flex text-center">
+                        <img class="align-self-center" width="45"
+                            src="https://es.seaicons.com/wp-content/uploads/2015/07/user-icon1.png" alt="">
+                    </div>
+                </div>`
+
+        } else {
+            div.innerHTML = `
+                <div class="row m-2">
+                    <div class="col-1">
+                    </div>
+                    <div class="col-9">
+                        <p class="text-end"><b> ${message.nik}</b></p>
+                        <div class="text-right">
+                            <p class="btn btn-primary"> ${message.message} </p>
+                        </div>
+                        <p class="font-weight-light text-center">${message.created_at}</p>
+                    </div>
+                    <div class="col-1 d-flex text-center">
+                        <img class="align-self-center" width="45"
+                            src="https://es.seaicons.com/wp-content/uploads/2015/07/user-icon1.png" alt="">
+                    </div>
+                </div>
+            `
+        }
+
+
+        boxMessages.appendChild(div)
+    }
+
+</script>
+
+</html>

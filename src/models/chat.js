@@ -2,12 +2,10 @@ const mongoose = require('mongoose');
 const {Schema} = mongoose;
 
 const ChatSchema = new Schema({
-    users : String,
+    travel_id   : String,
+    name        : String,
+    type        : String,
     created_at: {
-        type:    Date,
-        default: Date.now()
-    },
-    updated_at: {
         type:    Date,
         default: Date.now()
     }
