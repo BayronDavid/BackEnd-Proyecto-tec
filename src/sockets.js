@@ -6,31 +6,28 @@ module.exports = function(io){
 
     io.on('connection', async (socket) => {
         console.log('New connection established');
-        // await new Chat({
-        //     users: 'Bayron, Andres'
-        // }).save()
 
         socket.on('new user', (data, cb)=>{
-            console.log(data);
             cb(true);
-            socket.nickName = data;
-            nikNames.push(socket.nickName);
-            io.sockets.emit('users', nikNames)
-
+            socket.user = data;
+            updateMessages()
         })
 
         async function  updateMessages () {
-            let messages = await Message.find({})
-            await io.sockets.emit('load messages', messages)
+            try{
+                let messages = await Message.find({"id_chat": socket.user.id_chat})
+                console.log(messages);
+                io.sockets.emit('load messages', messages)
+            }catch(e){
+                console.log('Error', e);
+            }
         }
-        updateMessages()
 
         socket.on('send message', async (message) => {
             console.log('entro', message);
-            io.sockets.emit('new message', {message, user: socket.nickName})
             await new Message({
-                chat_id: 1,
-                nik: socket.nickName,
+                id_chat: socket.user.id_chat,
+                nik: socket.user.name +' '+ socket.user.lastName ,
                 message: message,
                 media: null,
             }).save()

@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const {Schema} = mongoose;
 
 const MessageSchema = new Schema({
-    travel_id   : Number,
+    id_chat     : String,
     nik         : String,
     message     : String,
     media       : String,
