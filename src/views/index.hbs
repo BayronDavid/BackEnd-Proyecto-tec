@@ -1,43 +1,69 @@
-<div class="page-content page-container" id="chat">
-        <div class="padding">
-            <div class="row container d-flex justify-content-center">
-                <div class="col-md-4">
-                    <div class="box box-warning direct-chat direct-chat-warning">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">Chat Messages</h3>
-                            <div class="box-tools pull-right">
-                                <span data-toggle="tooltip" id="lengthMessages" class="badge bg-yellow"
-                                    data-original-title="3 New Messages">20</span>
-                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                                </button>
-                                <button type="button" class="btn btn-box-tool" data-toggle="tooltip" title=""
-                                    data-widget="chat-pane-toggle" data-original-title="Contacts">
-                                    <i class="fa fa-comments"></i></button>
-                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="box-body">
-                            <div class="direct-chat-messages" id="boxMessages">
-                                
-                                
-                            </div>
-                        </div>
-                        <div class="box-footer">
-                            <!-- Form -->
-                            <form id="form-message" >
-                                <div class="input-group">
-                                    <input type="text" id="message" name="message" placeholder="Type Message ..."
-                                        class="form-control">
-                                    <span class="input-group-btn">
-                                        <button type="submit" class="btn btn-warning btn-flat">Enviar</button>
-                                    </span>
-                                </div>
-                            </form>
-                            <!--  -->
-                        </div>
+<div class="container h-100 mt-4 ">
+    <div class="row">
+        <div class="col-4 h-100 ">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col"> user </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th class="table-active">1</th>
+                        <th> <p id="lengthMessages"> </p> </th>
+                    </tr>
+                    <tr>
+                        <th>1</th>
+                    </tr>
+                    <tr>
+                        <th>1</th>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+        <div class="col-8 ">
+            <div class="row-10" id="boxMessages">
+                {{!-- <div class="row m-2">
+                    <div class="col-1 d-flex text-center">
+                        <!-- <img width="50" src="https://icons.iconarchive.com/icons/custom-icon-design/silky-line-user/512/users-icon.png" alt=""> -->
+                        <img class="align-self-center" width="45"
+                            src="https://es.seaicons.com/wp-content/uploads/2015/07/user-icon1.png" alt="">
+                    </div>
+                    <div class="col-9 ">
+                        <p><b> User</b></p>
+                        <p class="btn btn-secondary"> hola </p>
+                        <p class="font-weight-light text-center">Hace dos minutos</p>
+                    </div>
+                    <div class="col-2">
                     </div>
                 </div>
+                <div class="row m-2">
+                    <div class="col-1">
+                    </div>
+                    <div class="col-9">
+                        <p class="text-end"><b> User</b></p>
+                        <div class="text-right">
+                            <p class="btn btn-primary"> hola como andas </p>
+                        </div>
+                        <p class="font-weight-light text-center">Hace dos minutos</p>
+                    </div>
+                    <div class="col-1 d-flex text-center">
+                        <img class="align-self-center" width="45"
+                            src="https://es.seaicons.com/wp-content/uploads/2015/07/user-icon1.png" alt="">
+                    </div>
+                </div> --}}
+            </div>
+            <div class="row-2 mt-4">
+                <form id="form-message" class="row">
+                    <div class="col-10 ">
+                        <input id="message" class="form-control" type="text" placeholder="Mensaje">
+                    </div>
+                    <div class="col-1 ">
+                        <input  class="btn btn-success" type="submit" value="Enviar">
+                    </div>
+                </form>
             </div>
         </div>
     </div>
+</div>
