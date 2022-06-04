@@ -1,29 +1,47 @@
-const Chat = require('./models/chat')
-const Message = require('./models/message')
+const Chat = require('./Models/chat')
+const Message = require('./Models/message')
 
 module.exports = function(io){
+    let nikNames = [];
+
     io.on('connection', async (socket) => {
         console.log('New connection established');
-        // await new Chat({
-        //     users: 'Bayron, Andres'
-        // }).save()
 
-        let messages = await Message.find({})
+        socket.on('new user', (data, cb)=>{
+            cb(true);
+            socket.user = data;
+            updateMessages()
+        })
 
-        await io.sockets.emit('load messages', messages)
+        async function  updateMessages () {
+            try{
+                let messages = await Message.find({"id_chat": socket.user.id_chat})
+                console.log(messages);
+                io.sockets.emit('load messages', messages)
+            }catch(e){
+                console.log('Error', e);
+            }
+        }
 
-        socket.on('send message', async (data) => {
-            io.sockets.emit('new message', data)
+        socket.on('send message', async (message) => {
+            console.log('entro', message);
             await new Message({
-                chat_id: 1,
-                nik: 'Bayron',
-                message: data,
+                id_chat: socket.user.id_chat,
+                nik: socket.user.name +' '+ socket.user.lastName ,
+                message: message,
                 media: null,
             }).save()
+
+            updateMessages()
         })
 
+
+
         socket.on('disconnect', () =>{
-            console.log('User disconnected');
+            if(!socket.nickName) return;
+            // nickNames.splice(nickNames.indexOf(socket.nickName), 1)
+            // io.sockets.emit('users', nikNames)
         })
+
     })  
 }
