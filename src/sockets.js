@@ -1,8 +1,8 @@
 const Chat = require('./Models/chat')
 const Message = require('./Models/message')
+const moment = require('moment')
 
 module.exports = function(io){
-    let nikNames = [];
 
     io.on('connection', async (socket) => {
         console.log('New connection established');
@@ -15,8 +15,7 @@ module.exports = function(io){
 
         async function  updateMessages () {
             try{
-                let messages = await Message.find({"id_chat": socket.user.id_chat})
-                console.log(messages);
+                let messages = await Message.find({"id_travel": socket.user.id_travel})
                 io.sockets.emit('load messages', messages)
             }catch(e){
                 console.log('Error', e);
@@ -24,9 +23,8 @@ module.exports = function(io){
         }
 
         socket.on('send message', async (message) => {
-            console.log('entro', message);
             await new Message({
-                id_chat: socket.user.id_chat,
+                id_travel: socket.user.id_travel,
                 nik: socket.user.name +' '+ socket.user.lastName ,
                 message: message,
                 media: null,
@@ -35,13 +33,8 @@ module.exports = function(io){
             updateMessages()
         })
 
-
-
         socket.on('disconnect', () =>{
             if(!socket.nickName) return;
-            // nickNames.splice(nickNames.indexOf(socket.nickName), 1)
-            // io.sockets.emit('users', nikNames)
         })
-
     })  
 }
